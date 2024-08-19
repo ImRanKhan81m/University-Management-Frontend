@@ -5,6 +5,9 @@ import Image from "next/image";
 import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
 import { SubmitHandler } from "react-hook-form";
+import { useUserLoginMutation } from "@/redux/api/authApi";
+import { getUserInfo, isLoggedIn, storeUserInfo } from "@/services/auth.service"; 
+import { useRouter } from "next/navigation";
 
 type FormValues = {
   id: string;
@@ -12,11 +15,25 @@ type FormValues = {
 };
 
 const LoginPage = () => {
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
+  const router = useRouter()
+  const [userLogin] = useUserLoginMutation();
+  console.log(isLoggedIn())
+
+  const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
+    console.log(data)
     try {
-      console.log(data);
-    } catch (err) {}
+     const res = await userLogin({...data}).unwrap() 
+     if(res?.data?.accessToken){
+      router.push("/profile")
+     }
+     storeUserInfo({accessToken: res?.data?.accessToken})
+    } catch (err: any) {
+      console.error(err); 
+    }
   };
+
+
+
   return (
     <Row
       justify="center"
