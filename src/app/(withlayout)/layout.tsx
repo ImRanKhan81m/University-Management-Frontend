@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import Contents from "@/components/ui/Contents";
 import SideBar from "@/components/ui/Sidebar";
 import { isLoggedIn } from "@/services/auth.service";
@@ -7,19 +7,19 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
-const router = useRouter()
-  const isUserLoggedIn = isLoggedIn()
+  const userLoggedIn = isLoggedIn();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  useEffect (() => {
-    if (!isUserLoggedIn) {
-      router.push('/login')
+  useEffect(() => {
+    if (!userLoggedIn) {
+      router.push("/login");
     }
-    setIsLoading(true)
-  }, [isUserLoggedIn, isLoading]);
+    setIsLoading(true);
+  }, [router, isLoading]);
 
-  if(!isLoading){
-    return <p>Loading...</p>
+  if (!isLoading) {
+    return <p>Loading......</p>;
   }
 
   return (
