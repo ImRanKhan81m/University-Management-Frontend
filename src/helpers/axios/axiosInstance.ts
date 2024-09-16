@@ -8,7 +8,7 @@ instance.defaults.headers.post["Content-Type"] = "application/json";
 instance.defaults.headers["Accept"] = "application/json";
 instance.defaults.timeout = 60000;
 
-// Add a request interceptor
+// Add a request interceptor  
 instance.interceptors.request.use(function (config) {
     // Do something before request is sent
     const accessToken = getFromLocalStorage(authKey);
